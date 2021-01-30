@@ -7,83 +7,55 @@ import {
   Put,
   Delete,
 } from '@nestjs/common';
-import { ContactService } from './contact.service';
-import { Contact as ContactModel } from '@prisma/client';
+import { TaskService } from './task.service';
+import { Task as TaskModel } from '@prisma/client';
 
 @Controller()
 export class AppController {
   constructor(
-    private readonly contactService: ContactService,
+    private readonly taskService: TaskService,
   ) {}
 
-  //Contact Endpoint
-  @Get('contacts/')
-  async getContacts(): Promise<ContactModel[]> {
-    return this.contactService.contacts({
+  //Task Endpoint
+  @Get('tasks/')
+  async getTasks(): Promise<TaskModel[]> {
+    return this.taskService.tasks({
         where: { id: { not: 0 },
       },
     });
   }
 
-  @Get('contacts/:searchString')
-  async getFilteredContacts(
-    @Param('searchString') searchString: string,
-  ): Promise<ContactModel[]> {
-    return this.contactService.contacts({
-      where: {
-        OR: [
-          {
-            name: { contains: searchString },
-          },
-          {
-            address: { contains: searchString },
-          },
-          {
-            phone: { contains: searchString },
-          },
-          {
-            email: { contains: searchString },
-          },
-        ],
-      },
+  @Get('tasks/:id')
+  async getTaskById(@Param('id') id: string): Promise<TaskModel> {
+    return this.taskService.task({ id: Number(id) });
+  }
+
+  @Post('tasks')
+  async addTask(@Body() contentData: { content?: string; status: string;},
+  ): Promise<TaskModel> {
+    const { content, status } = contentData;
+    return this.taskService.createTask({
+      content,
+      status,
     });
   }
 
-  @Get('contact/:id')
-  async getContactById(@Param('id') id: string): Promise<ContactModel> {
-    return this.contactService.contact({ id: Number(id) });
-  }
-
-  @Post('contact')
-  async addContact(@Body() contentData: { name?: string; address: string; phone: string, email: string },
-  ): Promise<ContactModel> {
-    const { name, address, phone, email } = contentData;
-    return this.contactService.createContact({
-      name,
-      address,
-      phone,
-      email
-    });
-  }
-
-  @Put('contact/:id')
-  async editContact(@Param('id') id: string, @Body()  contentData: {
-    name?: string; address: string; phone: string, email: string }):
-    Promise<ContactModel> {
-    const { name, address, phone, email } = contentData;
-    return this.contactService.updateContact({
+  @Put('tasks/:id')
+  async editTask(@Param('id') id: string, @Body()  contentData: {
+    content?: string; status: string;}):
+    Promise<TaskModel> {
+    const { content, status } = contentData;
+    return this.taskService.updateTask({
       where: { id: Number(id) },
       data: {
-        name,
-        address,
-        phone,
-        email
+        content,
+        status
       },
     });
   }
 
-  @Delete('contact/:id')
-  async deleteContact(@Param('id') id: string): Promise<ContactModel> {
-    return this.contactService.deleteContact({ id: Number(id) });
+  @Delete('tasks/:id')
+  async deleteTask(@Param('id') id: string): Promise<TaskModel> {
+    return this.taskService.deleteTask({ id: Number(id) });
   }
 }
