@@ -1,15 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from './prisma.service';
-import {
-  Task,
-  Prisma,
-} from '@prisma/client';
+import { Task, Prisma } from '@prisma/client';
 
 @Injectable()
 export class TaskService {
   constructor(private prisma: PrismaService) {}
 
-  async task(taskWhereUniqueInput: Prisma.TaskWhereUniqueInput): Promise<Task | null> {
+  async task(
+    taskWhereUniqueInput: Prisma.TaskWhereUniqueInput,
+  ): Promise<Task | null> {
     return this.prisma.task.findUnique({
       where: taskWhereUniqueInput,
     });
@@ -20,7 +19,7 @@ export class TaskService {
     take?: number;
     cursor?: Prisma.TaskWhereUniqueInput;
     where?: Prisma.TaskWhereInput;
-    orderBy?: Prisma.TaskOrderByInput;
+    orderBy?: Prisma.TaskOrderByWithRelationInput;
   }): Promise<Task[]> {
     const { skip, take, cursor, where, orderBy } = params;
     return this.prisma.task.findMany({
