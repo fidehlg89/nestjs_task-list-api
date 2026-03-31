@@ -1,52 +1,64 @@
-## task list api
-Nes js + Prisma ORM project
+# 📝 Task List API
 
-## Description
+A modern, fast REST API built with [NestJS](https://nestjs.com/), [Prisma ORM](https://www.prisma.io/), and MySQL.
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## 🚀 Features
 
-## Installation
+- **NestJS** structure (Controllers, Services, Modules)
+- **Prisma** for strongly-typed database access
+- Automatic database schema synchronization and seeding
+- TypeScript configuration tailored for modern environments
+
+## 🛠 Prerequisites
+
+Make sure you have the following installed:
+- [Node.js](https://nodejs.org/en/) (v16 or higher recommended)
+- [MySQL](https://www.mysql.com/) database server running locally or remotely.
+
+## ⚙️ Environment Setup
+
+Create a `.env` file in the root directory (or update the existing one) with your MySQL connection string.
 
 ```bash
-$ npm install
+DATABASE_URL="mysql://root:1234@localhost:3306/tasks"
+```
+> Change `root:1234` to your actual database credentials and `tasks` to your preferred database name.
+
+## 📦 Installation
+
+```bash
+npm install
 ```
 
-## Running the app
+## 🏗 Running the App
+
+The project comes with a convenient development script that automatically resets the database, applies migrations, and runs the application in watch mode.
 
 ```bash
-# development
-$ npm run start
+# Starts the app and resets/syncs the database models
+# (Note: Reset is forced automatically to prevent the script from hanging)
+npm run start:dev
 
-# watch mode
-$ npm run start:dev
+# Standard run mode
+npm run start
 
-# production mode
-$ npm run start:prod
+# Production build mode
+npm run start:prod
 ```
 
-## Test
+## 🧪 Testing
 
 ```bash
-# unit tests
-$ npm run test
+# Unit tests
+npm run test
 
 # e2e tests
-$ npm run test:e2e
+npm run test:e2e
 
-# test coverage
-$ npm run test:cov
+# Test coverage
+npm run test:cov
 ```
 
-## Support
+## 📄 License
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
+This project is licensed under the MIT License.
